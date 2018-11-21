@@ -23,6 +23,8 @@ void int_ini(void)
 	EICRA |= (1<<ISC01);
 	//разрешим внешнее прерывание INT0
 	EIMSK |= (1<<INT0);
+	//разрешим прерывание pcint0-7
+	PCMSK0=0xff;
 }
 
 void lamp(unsigned char cnt)
@@ -40,6 +42,30 @@ void lamp(unsigned char cnt)
 ISR(INT0_vect)
 {
 	net_pool();
+}
+
+ISR(PCINT0_vect)
+{ 
+
+	//PORTD|=(1<<PORTD4);
+	//_delay_ms(1000);
+	_delay_ms(10);
+	if(!(PINA & (1<<PINA0)))
+	{
+		
+		if(PORTC&(1<<PORTC0))
+		{
+			PORTB&=~(1<<0);
+			setPORTC&=~(1<<0);
+		}
+		else
+		{
+			PORTB|=(1<<0);
+			setPORTC|=(1<<0);
+		}
+		_delay_ms(400);
+	}
+
 }
 //--------------------------------------------------
 int main(void)
@@ -66,7 +92,7 @@ int main(void)
 			        }
 			        else
 			        {
-				        PORTA=eeprom_read_byte(&setPORTC);
+				        PORTC=eeprom_read_byte(&setPORTC);
 				        USART_Transmit(PORTC);
 			        }
 		}
