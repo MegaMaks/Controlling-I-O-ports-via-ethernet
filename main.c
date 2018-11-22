@@ -16,6 +16,7 @@ void port_ini(void)
 	DDRD &= ~(0b00000100);
 	DDRC=0xFF;
 	DDRA=0x00;
+	PORTA=0xFF;
 }
 void int_ini(void)
 {
@@ -25,6 +26,8 @@ void int_ini(void)
 	EIMSK |= (1<<INT0);
 	//разрешим прерывание pcint0-7
 	PCMSK0=0xff;
+	PCICR|= (1<<PCIE0);
+	PCIFR|= (1<<PCIF0);
 }
 
 void lamp(unsigned char cnt)
@@ -46,21 +49,20 @@ ISR(INT0_vect)
 
 ISR(PCINT0_vect)
 { 
-
-	//PORTD|=(1<<PORTD4);
-	//_delay_ms(1000);
 	_delay_ms(10);
+
+	////lamp(3);
 	if(!(PINA & (1<<PINA0)))
 	{
 		
 		if(PORTC&(1<<PORTC0))
 		{
-			PORTB&=~(1<<0);
+			PORTC&=~(1<<0);
 			setPORTC&=~(1<<0);
 		}
 		else
 		{
-			PORTB|=(1<<0);
+			PORTC|=(1<<0);
 			setPORTC|=(1<<0);
 		}
 		_delay_ms(400);
