@@ -9,8 +9,8 @@ void net_ini(void);
 void net_pool(void);
 void init_timer(void);
 //--------------------------------------------------
-#define  IP_ADDR	ip_join(192,168,1,193)
-#define IP_GATE ip_join(192,168,1,1)
+#define  IP_ADDR	ip_join(192,168,88,10)
+#define IP_GATE ip_join(192,168,88,1)
 #define IP_MASK ip_join(255,255,255,0)
 #define MAC_BROADCAST   {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF}
 #define MAC_NULL   {0x00,0x00,0x00,0x00,0x00,0x00}

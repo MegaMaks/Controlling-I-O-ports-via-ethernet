@@ -14,6 +14,7 @@
 #include "usart.h"
 #include "net.h"
 #include "enc28j60.h"
+#include "smartUD1.h"
 
 //--------------------------------------------------
 #endif /* MAIN_H_ */
